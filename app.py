@@ -6,6 +6,7 @@ from flask_bcrypt import Bcrypt
 from flask_jwt_extended import JWTManager
 from config import Config
 from dotenv import load_dotenv
+from flask_cors import CORS
 
 load_dotenv()
 
@@ -16,6 +17,8 @@ jwt = JWTManager()
 
 def create_app():
     app = Flask(__name__)
+    CORS(app, resources={r"/*": {"origins": "http://localhost:3000"}})  # Replace with your frontend URL
+
     app.config.from_object(Config)
 
     db.init_app(app)

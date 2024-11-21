@@ -94,3 +94,24 @@ def send_message():
     db.session.commit()
     return jsonify({'message': 'Message sent successfully'}), 201
 
+@public_bp.route('/experience', methods=['GET'])
+def get_experience():
+    experiences = Experience.query.all()
+    return jsonify([{'id': exp.id, 'title': exp.title, 'description': exp.description} for exp in experiences]), 200
+
+@public_bp.route('/portfolio', methods=['GET'])
+def get_portfolio():
+    projects = Portfolio.query.all()
+    return jsonify([{'id': proj.id, 'project_name': proj.project_name, 'description': proj.description} for proj in projects]), 200
+
+@public_bp.route('/services', methods=['GET'])
+def get_services():
+    services = Service.query.all()
+    return jsonify([{'id': srv.id, 'title': srv.title, 'description': srv.description} for srv in services]), 200
+
+@public_bp.route('/blog', methods=['GET'])
+def get_blog_posts():
+    blog_posts = BlogPost.query.all()
+    return jsonify([{'id': post.id, 'title': post.title, 'content': post.content} for post in blog_posts]), 200
+
+
