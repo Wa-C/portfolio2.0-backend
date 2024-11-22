@@ -93,6 +93,24 @@ def send_message():
     db.session.add(new_message)
     db.session.commit()
     return jsonify({'message': 'Message sent successfully'}), 201
+from flask import Blueprint, jsonify
+from models import ContactMessage  # Replace with your actual model
+from app import db
+
+contact_bp = Blueprint('contact', __name__)
+
+@contact_bp.route('/contact', methods=['GET'])
+def get_contact_info():
+    contact_message = ContactMessage.query.first()
+    if contact_message:
+        return jsonify({
+            'id': contact_message.id,
+            'name': contact_message.name,
+            'email': contact_message.email,
+            'message': contact_message.message,
+            'date_sent': contact_message.date_sent
+        })
+    return jsonify({'error': 'Contact info not found'}), 404
 
 @public_bp.route('/experience', methods=['GET'])
 def get_experience():
